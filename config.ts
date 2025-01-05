@@ -1,12 +1,15 @@
 import {getDefaultConfig} from 'connectkit';
-import {createConfig} from "wagmi";
-import {mainnet, polygon} from 'wagmi/chains';
+import {createConfig, http} from "wagmi";
+import { lensSepolia } from "./customChains";
 
 export const config = createConfig(
     getDefaultConfig({
         appName: 'Refugees Aid',
         walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-        chains: [mainnet, polygon]
+        chains: [lensSepolia],
+        transports: {
+            [lensSepolia.id]: http(lensSepolia.rpcUrls.default.http[0])
+        }
     })
 );
 
