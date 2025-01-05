@@ -2,7 +2,7 @@
 
 A project built over the weekend for [Lens Holiday Hackathon](https://www.lens.xyz/news/lens-holiday-hackathon)
 
-## Using [Next.js](https://nextjs.org/) + [TypeScript](https://www.typescriptlang.org/) + [ConnectKit](https://github.com/family/connectkit)
+## Using [foundry-zksync](https://github.com/matter-labs/foundry-zksync) + [Next.js](https://nextjs.org/) + [TypeScript](https://www.typescriptlang.org/) + [ConnectKit](https://github.com/family/connectkit)
 
 The initial app was forked from an example of [connectkit](https://github.com/family/connectkit/tree/main/examples/nextjs-app)
 

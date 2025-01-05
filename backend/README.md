@@ -3,9 +3,15 @@
 Backend using [foundry-zksync](https://github.com/matter-labs/foundry-zksync)
 It may not properly work on Windows.
 
+
 ## Docs
 
 https://dev-preview.lens.xyz/docs/network/getting-started/foundry
+
+
+## Deployment
+
+Contract deployed to [0xDea4CB019AE95655A362673bB8728136117fB3BC](https://block-explorer.testnet.lens.dev/address/0xDea4CB019AE95655A362673bB8728136117fB3BC)
 
 
 ## Foundry
