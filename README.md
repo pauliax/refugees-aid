@@ -18,9 +18,10 @@ https://dev-preview.lens.xyz/docs
 https://docs.family.co/connectkit
 
 
-## Dev
+## Frontend
 
 ```shell
+cd frontend
 yarn
 yarn dev
 ```
