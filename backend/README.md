@@ -1,3 +1,13 @@
+## Backend
+
+Backend using [foundry-zksync](https://github.com/matter-labs/foundry-zksync)
+It may not properly work on Windows.
+
+## Docs
+
+https://dev-preview.lens.xyz/docs/network/getting-started/foundry
+
+
 ## Foundry
 
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
