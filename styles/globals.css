@@ -22,3 +22,72 @@ body {
             rgb(var(--background-end-rgb))
     ) rgb(var(--background-start-rgb));
 }
+
+/* Base styles for the header */
+header {
+    background-color: #455B88FF; /* Blue */
+    color: #ffffff; /* White */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 1rem 0; /* Top and bottom padding */
+}
+
+/* Container to center content and define max width */
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem; /* Left and right padding */
+}
+
+/* Logo styles */
+header .logo {
+    font-size: 1.5rem; /* Text size */
+    font-weight: 800; /* Extra bold font */
+    letter-spacing: -0.5px; /* Tight tracking */
+    text-decoration: none;
+    color: #ffffff; /* White */
+    transition: color 0.2s ease; /* Smooth hover effect */
+}
+
+header .logo:hover {
+    color: #93c5fd; /* Light blue (hover effect) */
+}
+
+/* Navigation styles */
+header nav ul {
+    display: flex;
+    gap: 1.5rem; /* Space between items */
+    list-style: none; /* Remove bullet points */
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li a {
+    font-size: 1rem; /* Text size */
+    color: #ffffff; /* White */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.2s ease; /* Smooth hover effect */
+}
+
+header nav ul li a:hover {
+    color: #93c5fd; /* Light blue on hover */
+}
+
+/* ConnectKitButton wrapper (if additional styling is needed) */
+header nav ul li button {
+    font-size: 1rem;
+    background: #ffffff; /* White button background */
+    color: #455B88FF; /* Blue text */
+    padding: 0.5rem 1rem; /* Spacing inside the button */
+    border-radius: 0.375rem; /* Rounded corners */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Smooth transition */
+}
+
+header nav ul li button:hover {
+    background: #93c5fd; /* Light blue background */
+    color: #ffffff; /* White text */
+}
