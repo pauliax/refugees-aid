@@ -7,6 +7,7 @@ import {NewListing} from "./components/NewListing";
 import HelpRequestList from "./components/HelpRequestList";
 import Footer from "@/components/Footer";
 import {LensBanner} from "@/components/LensBanner";
+import {Toaster} from "@/components/ui/toaster";
 
 export default function Home() {
   const {isConnected} = useAccount();
@@ -22,6 +23,7 @@ export default function Home() {
     <div className="min-h-screen bg-retro-beige flex flex-col">
       <Header/>
       <LensBanner/>
+      <Toaster/>
       <main className="container mx-auto py-4 space-y-8">
         <div className="container mx-auto px-4 pb-2">
           <section className="text-center mb-8">

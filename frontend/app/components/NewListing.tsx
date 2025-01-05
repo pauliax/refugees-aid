@@ -27,6 +27,7 @@ export const NewListing = () => {
     toast({
       title: "Listing Created",
       description: "Your assistance request has been published.",
+      duration: 4000,
     });
     setFormData({type: "ask", description: "", amount: "", duration: ""});
   };
