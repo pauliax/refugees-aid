@@ -2,7 +2,7 @@
 
 import {useCallback, useState} from 'react'
 import {useReadContract, useSimulateContract, useWatchContractEvent, useWriteContract} from 'wagmi';
-import {CONTRACT_ABI, CONTRACT_ADDRESS} from '../types/contract';
+import {CONTRACT_ABI, CONTRACT_ADDRESS} from '@/types/contract';
 
 type UseContractType = {
   functionName: any,

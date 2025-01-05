@@ -1,10 +1,12 @@
 'use client';
 
-import HelpRequestForm from './components/HelpRequestForm'
-import Requests from "./requests/page";
 import {useAccount} from 'wagmi';
-import {useEffect, useState} from "react";
-import {ConnectKitButton} from 'connectkit'
+import React, {useEffect, useState} from "react";
+import Header from "./components/Header";
+import {NewListing} from "./components/NewListing";
+import HelpRequestList from "./components/HelpRequestList";
+import Footer from "@/components/Footer";
+import {LensBanner} from "@/components/LensBanner";
 
 export default function Home() {
   const {isConnected} = useAccount();
@@ -17,20 +19,33 @@ export default function Home() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <section className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Welcome to the Refugee Aid Portal</h1>
-        <p className="text-xl">A platform for war refugees to seek and receive assistance</p>
-      </section>
-
-      {isConnected ? (<HelpRequestForm/>) :
-        <div>
-          <p className="text-xl">Please connect the wallet to submit a new listing</p>
-          <ConnectKitButton/>
+    <div className="min-h-screen bg-retro-beige flex flex-col">
+      <Header/>
+      <LensBanner/>
+      <main className="container mx-auto py-4 space-y-8">
+        <div className="container mx-auto px-4 pb-2">
+          <section className="text-center mb-8">
+            <h1 className="text-4xl font-bold mb-4 text-retro-brown">Welcome to the Refugee Aid Portal</h1>
+            <p className="text-xl text-retro-brown">A portal for refugees to seek and receive assistance</p>
+          </section>
         </div>
-      }
 
-      <Requests/>
+        {isConnected ? (<NewListing/>) :
+          <div>
+            <h4 className="font-heading text-xl text-retro-brown mb-6 px-6">
+              Please connect the wallet to submit a new listing
+            </h4>
+          </div>
+        }
+
+        <div className="w-full max-w-7xl mx-auto">
+          <h2 className="font-heading text-2xl text-retro-brown mb-6 px-6">
+            Active Listings
+          </h2>
+          <HelpRequestList/>
+        </div>
+      </main>
+      <Footer/>
     </div>
   )
 }
