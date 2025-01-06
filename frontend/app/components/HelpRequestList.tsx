@@ -26,7 +26,8 @@ export default function HelpRequestList() {
   const [listings, setListings] = useState<ListingCardProps[]>([]);
 
   const {
-    readData: listingCounter
+    readData: listingCounter,
+    refetch: refetchListingCounter,
   } = useContract({
     functionName: 'listingCounter'
   });
@@ -40,9 +41,37 @@ export default function HelpRequestList() {
     })
   );
 
-  const {data: readListings} = useReadContracts({
+  const {
+    data: readListings,
+    refetch: refetchListings,
+  } = useReadContracts({
     contracts: contractCalls,
   });
+
+  // Manual refetch on interval
+  useEffect(() => {
+    let isRefetching = false;
+
+    const interval = setInterval(async () => {
+      if (isRefetching) {
+        console.log('Skipping refetch - previous request still in progress');
+        return;
+      }
+
+      try {
+        isRefetching = true;
+        await refetchListingCounter();
+        await refetchListings();
+        console.log('Refetch successful');
+      } catch (error) {
+        console.error('Refetch failed:', error);
+      } finally {
+        isRefetching = false;
+      }
+    }, 10_000); // 10 sec
+
+    return () => clearInterval(interval);
+  }, [refetchListingCounter, refetchListings]);
 
   useEffect(() => {
     if (!readListings) {
@@ -57,6 +86,10 @@ export default function HelpRequestList() {
     setListings(list);
   }, [readListings]);
 
+  const onActionCallback = async (id: number) => {
+    console.log('on action', id);
+  }
+
   if (!listingCounter || !readListings) {
     return null;
   }
@@ -64,7 +97,7 @@ export default function HelpRequestList() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {listings.map((listing, index) => (
-        <ListingCard key={index} {...listing} />
+        <ListingCard key={index} onActionCallback={onActionCallback} {...listing} />
       ))}
     </div>
   )

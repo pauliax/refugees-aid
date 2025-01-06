@@ -30,11 +30,26 @@ export const UserStats = () => {
   const {address} = useAccount();
 
   const {
-    readData: getUserDetails
+    readData: getUserDetails,
+    refetch
   } = useContract({
     functionName: 'getUserDetails',
     args: [address]
   });
+
+  // Manual refetch on interval
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        await refetch();
+        console.log('User details refetch successful');
+      } catch (error) {
+        console.error('User details refetch failed:', error);
+      }
+    }, 12_000); // 12 sec
+
+    return () => clearInterval(interval);
+  }, [refetch]);
 
   useEffect(() => {
     if (!getUserDetails) {

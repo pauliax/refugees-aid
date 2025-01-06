@@ -28,6 +28,7 @@ export interface ListingCardProps {
   createdAt: bigint;
   matchedWith?: string;
   deliveredAt?: bigint;
+  onActionCallback?: (id: number) => void;
 }
 
 export const ListingCard = (listing: ListingCardProps) => {
@@ -74,8 +75,13 @@ export const ListingCard = (listing: ListingCardProps) => {
   const writeAction = async (action: any) => {
     try {
       const {error} = await action?.() || {};
+
       if (error) {
         console.error('Contract write error:', error);
+      } else {
+        if (listing.onActionCallback) {
+          listing.onActionCallback(listing.id);
+        }
       }
     } catch (e) {
       console.error('Transaction failed:', e);
