@@ -3,9 +3,17 @@
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
-import {Ban, Clock, Coins, HandshakeIcon, Package} from "lucide-react";
-import {secondsToHours, translateListingStatus, translateListingType} from "@/utils/utility-functions";
+import {Ban, Calendar, Clock, Coins, HandshakeIcon, Package, User} from "lucide-react";
+import {
+  formatAddress,
+  getAddressLink,
+  isEmptyAddress,
+  secondsToHours,
+  translateListingStatus,
+  translateListingType
+} from "@/utils/utility-functions";
 import {formatEther} from 'viem';
+import {format} from "date-fns";
 
 export interface ListingCardProps {
   id: number;
@@ -16,8 +24,8 @@ export interface ListingCardProps {
   price: bigint;
   duration: bigint;
   createdAt: bigint;
-  matchedWith: string;
-  deliveredAt: bigint;
+  matchedWith?: string;
+  deliveredAt?: bigint;
 }
 
 export const ListingCard = (listing: ListingCardProps) => {
@@ -58,8 +66,26 @@ export const ListingCard = (listing: ListingCardProps) => {
             <span>{secondsToHours(listing.duration)} hours</span>
           </div>
         </div>
+        <div className="space-y-2 text-sm font-mono">
+          <div className="flex items-center text-retro-brown/80">
+            <User className="w-4 h-4 mr-2"/>
+            <span>Created by: <a href={getAddressLink(listing.creator)}
+                                 target="_blank">{formatAddress(listing.creator)}</a></span>
+          </div>
+          {!isEmptyAddress(listing.matchedWith) && (
+            <div className="flex items-center text-retro-brown/80">
+              <HandshakeIcon className="w-4 h-4 mr-2"/>
+              <span>Matched with: <a href={getAddressLink(listing.matchedWith)}
+                                     target="_blank">{formatAddress(listing.matchedWith)}</a></span>
+            </div>
+          )}
+          <div className="flex items-center text-retro-brown/80">
+            <Calendar className="w-4 h-4 mr-2"/>
+            <span>Created: {format(Number(listing.createdAt) * 1000, 'MMM d, yyyy HH:mm')}</span>
+          </div>
+        </div>
       </CardContent>
-      <CardFooter className="grid grid-cols-2 gap-2">
+      <CardFooter className="grid grid-cols-3 gap-2">
         <Button
           onClick={() => handleAction("cancel")}
           variant="outline"
@@ -82,13 +108,6 @@ export const ListingCard = (listing: ListingCardProps) => {
         >
           <Package className="w-4 h-4 mr-2"/>
           Deliver
-        </Button>
-        <Button
-          onClick={() => handleAction("collect")}
-          className="font-mono bg-retro-sage hover:bg-retro-olive text-white"
-        >
-          <Coins className="w-4 h-4 mr-2"/>
-          Collect
         </Button>
       </CardFooter>
     </Card>

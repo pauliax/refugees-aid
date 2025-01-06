@@ -1,3 +1,5 @@
+import {lensSepolia} from "../../customChains";
+
 export const secondsToDays = (seconds?: bigint | string): bigint => {
   if (!seconds) return BigInt(0);
 
@@ -8,6 +10,20 @@ export const secondsToHours = (seconds?: bigint | string): bigint => {
   if (!seconds) return BigInt(0);
 
   return BigInt(seconds) / BigInt(60 * 60); // 3600 seconds in an hour
+};
+
+export const isEmptyAddress = (address?: string) => {
+  return !address || /^0x0+$/.test(address);
+};
+
+export const formatAddress = (address?: string) => {
+  if (!address) return '';
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+};
+
+export const getAddressLink = (address?: string) => {
+  if (!address) return '';
+  return `${lensSepolia.blockExplorers?.default.url}/address/${address}`;
 };
 
 export const translateListingType = (listingType: number): string => {
