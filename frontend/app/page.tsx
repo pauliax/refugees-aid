@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import {LensBanner} from "@/components/LensBanner";
 import {Toaster} from "@/components/ui/toaster";
 import {useContract} from "@/hooks/useContract";
+import {UserStats} from "@/components/UserStats";
 
 export default function Home() {
   const {isConnected} = useAccount();
@@ -33,13 +34,13 @@ export default function Home() {
       <Toaster/>
       <main className="container mx-auto py-4 space-y-8">
         <div className="container mx-auto px-4 pb-2">
-          <section className="text-center mb-8">
+          <section className="text-center">
             <h1 className="text-4xl font-bold mb-4 text-retro-brown">Welcome to the Refugee Aid Portal</h1>
             <p className="text-xl text-retro-brown">A portal for refugees to seek and receive assistance</p>
           </section>
         </div>
 
-        {isConnected ? (<NewListing/>) :
+        {isConnected ? (<div><UserStats/><NewListing/></div>) :
           <div>
             <h4 className="font-heading text-xl text-retro-brown mb-6 px-6">
               Please connect the wallet to submit a new listing

@@ -4,8 +4,8 @@ import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
 import {Ban, Clock, Coins, HandshakeIcon, Package} from "lucide-react";
-import {secondsToDays, secondsToHours, translateListingStatus, translateListingType} from "@/utils/utility-functions";
-import { formatEther } from 'viem';
+import {secondsToHours, translateListingStatus, translateListingType} from "@/utils/utility-functions";
+import {formatEther} from 'viem';
 
 export interface ListingCardProps {
   id: number;

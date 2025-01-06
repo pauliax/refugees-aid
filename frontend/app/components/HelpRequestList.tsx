@@ -58,7 +58,7 @@ export default function HelpRequestList() {
   }, [readListings]);
 
   if (!listingCounter || !readListings) {
-    return <div></div>;
+    return null;
   }
 
   return (
