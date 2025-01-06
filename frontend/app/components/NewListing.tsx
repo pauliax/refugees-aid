@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {FormEvent, useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
@@ -9,22 +9,8 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/comp
 import {useToast} from "@/components/hooks/use-toast";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 import {useContract} from "@/hooks/useContract";
-
-const secondsToDays = (seconds?: bigint | string): bigint => {
-  if (!seconds) return BigInt(0);
-
-  seconds = BigInt(seconds);
-
-  const secondsInADay = BigInt(24 * 60 * 60); // 86400 seconds in a day
-  return seconds / secondsInADay;
-};
-
-const secondsToHours = (seconds?: bigint | string): bigint => {
-  const days = secondsToDays(seconds);
-
-  const hoursInADay = BigInt(24);
-  return days * hoursInADay;
-};
+import {secondsToDays, secondsToHours} from "@/utils/utility-functions";
+import {parseEther} from 'viem';
 
 export const NewListing = () => {
   const {toast} = useToast();
@@ -47,18 +33,43 @@ export const NewListing = () => {
     functionName: 'ACCEPTANCE_WINDOW'
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const {handleWrite, isWritePending} = useContract({
+    functionName: 'createListing',
+    args: [
+      formData.type == 'ask' ? 0 : 1,
+      formData.description,
+      parseEther(formData.amount), // in wei
+      Number(formData.duration) * 3600, // in seconds
+    ]
+  });
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const durationInSeconds = Number(formData.duration) * 3600;
-    console.log("Submitting:", {...formData, duration: durationInSeconds});
+    console.log("Submitting:", {...formData});
 
-    toast({
-      title: "Listing Created",
-      description: "Your assistance request has been published.",
-      duration: 4000,
-    });
-    setFormData({type: "ask", description: "", amount: "", duration: ""});
+    try {
+      const {error} = await handleWrite?.() || {};
+      if (error) {
+        console.error('Contract write error:', error);
+
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Transaction failed",
+          duration: 4000,
+        });
+      } else {
+        toast({
+          title: "Listing Created",
+          description: "Your listing has been published.",
+          duration: 4000,
+        });
+        setFormData({type: "ask", description: "", amount: "", duration: ""});
+      }
+    } catch (e) {
+      console.error('Transaction failed:', e);
+    }
   };
 
   const handleChange = (
@@ -161,6 +172,7 @@ export const NewListing = () => {
           <Button
             type="submit"
             className="w-full bg-retro-sage hover:bg-retro-olive text-white font-mono transition-colors duration-300"
+            disabled={isWritePending}
           >
             Submit Listing
           </Button>

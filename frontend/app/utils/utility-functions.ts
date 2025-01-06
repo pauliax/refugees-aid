@@ -1,4 +1,16 @@
-export function translateListingType(listingType: number): string {
+export const secondsToDays = (seconds?: bigint | string): bigint => {
+  if (!seconds) return BigInt(0);
+
+  return BigInt(seconds) / BigInt(24 * 60 * 60); // 86400 seconds in a day
+};
+
+export const secondsToHours = (seconds?: bigint | string): bigint => {
+  if (!seconds) return BigInt(0);
+
+  return BigInt(seconds) / BigInt(60 * 60); // 3600 seconds in an hour
+};
+
+export const translateListingType = (listingType: number): string => {
   switch (listingType) {
     case 0:
       return "Ask";
@@ -9,7 +21,7 @@ export function translateListingType(listingType: number): string {
   }
 }
 
-export function translateListingStatus(status: number): string {
+export const translateListingStatus = (status: number): string => {
   switch (status) {
     case 0:
       return "Non-existent";

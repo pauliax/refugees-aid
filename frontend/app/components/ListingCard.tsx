@@ -4,7 +4,8 @@ import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
 import {Ban, Clock, Coins, HandshakeIcon, Package} from "lucide-react";
-import {translateListingStatus, translateListingType} from "@/utils/utility-functions";
+import {secondsToDays, secondsToHours, translateListingStatus, translateListingType} from "@/utils/utility-functions";
+import { formatEther } from 'viem';
 
 export interface ListingCardProps {
   id: number;
@@ -50,11 +51,11 @@ export const ListingCard = (listing: ListingCardProps) => {
         <div className="flex items-center justify-between text-sm font-mono">
           <div className="flex items-center text-retro-brown/80">
             <Coins className="w-4 h-4 mr-2"/>
-            <span>{listing.price} GRASS</span>
+            <span>{formatEther(listing.price)} GRASS</span>
           </div>
           <div className="flex items-center text-retro-brown/80">
             <Clock className="w-4 h-4 mr-2"/>
-            <span>{listing.duration} days</span>
+            <span>{secondsToHours(listing.duration)} hours</span>
           </div>
         </div>
       </CardContent>
