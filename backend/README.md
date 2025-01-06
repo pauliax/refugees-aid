@@ -1,6 +1,7 @@
 ## Backend
 
 Backend using [foundry-zksync](https://github.com/matter-labs/foundry-zksync)
+
 It may not properly work on Windows.
 
 
@@ -11,7 +12,14 @@ https://dev-preview.lens.xyz/docs/network/getting-started/foundry
 
 ## Deployment
 
-Contract deployed to [0xDea4CB019AE95655A362673bB8728136117fB3BC](https://block-explorer.testnet.lens.dev/address/0xDea4CB019AE95655A362673bB8728136117fB3BC)
+Contract deployed to [0xefEe661ebD1Bc4176686F604c7251542CBd67421](https://testnet.lenscan.io/address/0xefEe661ebD1Bc4176686F604c7251542CBd67421)
+
+
+Explorers:
+
+https://testnet.lenscan.io/
+
+https://block-explorer.testnet.lens.dev/
 
 
 ## Foundry

@@ -1,6 +1,6 @@
 # Refugees Aid App
 
-A project built over the weekend for [Lens Holiday Hackathon](https://www.lens.xyz/news/lens-holiday-hackathon)
+A project built for [Lens Holiday Hackathon](https://www.lens.xyz/news/lens-holiday-hackathon)
 
 Try it out: https://refugees-aid.vercel.app/
 

@@ -131,14 +131,13 @@ contract RefugeeAid is Ownable, ReentrancyGuard {
         emit ListingCancelled(_listingId);
     }
 
-    function matchListing(uint256 _listingId) external payable {
+    function matchListing(uint256 _listingId) external {
         Listing storage listing = listings[_listingId];
         require(
             listing.status == ListingStatus.Active,
             "Incorrect listing status"
         );
         require(msg.sender != listing.creator, "Cannot match own listing");
-        require(msg.value == listing.price, "Invalid amount");
 
         listing.status = ListingStatus.Matched;
         listing.matchedWith = msg.sender;
@@ -146,12 +145,13 @@ contract RefugeeAid is Ownable, ReentrancyGuard {
         emit ListingMatched(_listingId, listing.creator, msg.sender);
     }
 
-    function acceptDelivery(uint256 _listingId) external nonReentrant {
+    function acceptDelivery(uint256 _listingId) external payable nonReentrant {
         Listing storage listing = listings[_listingId];
         require(
             listing.status == ListingStatus.Matched,
             "Incorrect listing status"
         );
+        require(msg.value == listing.price, "Invalid amount");
 
         address receiver = listing.listingType == ListingType.Offer
             ? listing.matchedWith
