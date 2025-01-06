@@ -2,6 +2,8 @@
 
 A project built for [Lens Holiday Hackathon](https://www.lens.xyz/news/lens-holiday-hackathon)
 
+Presentation: [RefugeeAid.pdf](RefugeeAid.pdf)
+
 Try it out: https://refugees-aid.vercel.app/
 
 ![Screenshot](./screenshot.png?raw=true "Screenshot")
