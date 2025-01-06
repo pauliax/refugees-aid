@@ -8,6 +8,8 @@ Try it out: https://refugees-aid.vercel.app/
 
 ![Screenshot](./screenshot.png?raw=true "Screenshot")
 
+![Screenshot2](./screenshot2.png?raw=true "Screenshot2")
+
 ## Using [foundry-zksync](https://github.com/matter-labs/foundry-zksync) + [Next.js](https://nextjs.org/) + [TypeScript](https://www.typescriptlang.org/) + [ConnectKit](https://github.com/family/connectkit)
 
 The initial app was forked from an example of [connectkit](https://github.com/family/connectkit/tree/main/examples/nextjs-app)
