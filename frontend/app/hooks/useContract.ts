@@ -26,7 +26,7 @@ export function useContract(param: UseContractType) {
   });
 
   // Contract write hooks
-  const {writeContract, isPending: isWritePending} = useWriteContract();
+  const {writeContract, writeContractAsync, isPending: isWritePending, data: result} = useWriteContract();
 
   // Simulation hook
   const {data: simulateData, error: simulateError} = useSimulateContract({
@@ -112,6 +112,7 @@ export function useContract(param: UseContractType) {
     getInputValue,
     parseInput,
     handleWrite,
+    writeContractAsync,
     refetch,
   }
 }

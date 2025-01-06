@@ -140,7 +140,7 @@ export const ListingCard = (listing: ListingCardProps) => {
             Cancel
         </Button>
         }
-        {listing.status === 1 && listing.creator !== address && <Button
+        {listing.status === 1 && listing.creator !== address && !isEmptyAddress(address) && <Button
             onClick={() => handleAction("match")}
             className="font-mono bg-retro-sage hover:bg-retro-olive text-white"
         >
