@@ -8,6 +8,7 @@ import HelpRequestList from "./components/HelpRequestList";
 import Footer from "@/components/Footer";
 import {LensBanner} from "@/components/LensBanner";
 import {Toaster} from "@/components/ui/toaster";
+import {useContract} from "@/hooks/useContract";
 
 export default function Home() {
   const {isConnected} = useAccount();
@@ -16,6 +17,12 @@ export default function Home() {
   useEffect(() => {
     setIsLoading(false);
   }, []);
+
+  const {
+    readData: listingCounter
+  } = useContract({
+    functionName: 'listingCounter'
+  });
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -42,7 +49,7 @@ export default function Home() {
 
         <div className="w-full max-w-7xl mx-auto">
           <h2 className="font-heading text-2xl text-retro-brown mb-6 px-6">
-            Active Listings
+            Aid Listings ({listingCounter})
           </h2>
           <HelpRequestList/>
         </div>
