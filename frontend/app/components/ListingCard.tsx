@@ -14,6 +14,8 @@ import {
 } from "@/utils/utility-functions";
 import {formatEther} from 'viem';
 import {format} from "date-fns";
+import {useAccount} from "wagmi";
+import {useContract} from "@/hooks/useContract";
 
 export interface ListingCardProps {
   id: number;
@@ -29,12 +31,55 @@ export interface ListingCardProps {
 }
 
 export const ListingCard = (listing: ListingCardProps) => {
+  const {address} = useAccount();
+
+  const {handleWrite: cancelListing} = useContract({
+    functionName: 'cancelListing',
+    args: [listing.id]
+  });
+
+  const {handleWrite: matchListing} = useContract({
+    functionName: 'matchListing',
+    args: [listing.id]
+  });
+
+  const {handleWrite: acceptDelivery} = useContract({
+    functionName: 'acceptDelivery',
+    args: [listing.id]
+  });
+
   if (!listing || !listing.id) {
     return <div></div>;
   }
 
   const handleAction = (action: string) => {
     console.log(`${action} listing`, listing);
+
+    switch (action) {
+      case 'cancel':
+        writeAction(cancelListing).then(r => console.log("Cancelled", r));
+        break;
+      case 'match':
+        writeAction(matchListing).then(r => console.log("Matched", r));
+        break;
+      case 'deliver':
+        writeAction(acceptDelivery).then(r => console.log("Delivered", r));
+        break;
+      default:
+        console.warn('Unknown action', action);
+        break;
+    }
+  };
+
+  const writeAction = async (action: any) => {
+    try {
+      const {error} = await action?.() || {};
+      if (error) {
+        console.error('Contract write error:', error);
+      }
+    } catch (e) {
+      console.error('Transaction failed:', e);
+    }
   };
 
   return (
@@ -86,29 +131,33 @@ export const ListingCard = (listing: ListingCardProps) => {
         </div>
       </CardContent>
       <CardFooter className="grid grid-cols-3 gap-2">
-        <Button
-          onClick={() => handleAction("cancel")}
-          variant="outline"
-          className="font-mono border-retro-brown/20 hover:bg-retro-brown/5"
+        {listing.status === 1 && listing.creator === address && <Button
+            onClick={() => handleAction("cancel")}
+            variant="outline"
+            className="font-mono border-retro-brown/20 hover:bg-retro-brown/5"
         >
-          <Ban className="w-4 h-4 mr-2"/>
-          Cancel
+            <Ban className="w-4 h-4 mr-2"/>
+            Cancel
         </Button>
-        <Button
-          onClick={() => handleAction("match")}
-          className="font-mono bg-retro-sage hover:bg-retro-olive text-white"
+        }
+        {listing.status === 1 && listing.creator !== address && <Button
+            onClick={() => handleAction("match")}
+            className="font-mono bg-retro-sage hover:bg-retro-olive text-white"
         >
-          <HandshakeIcon className="w-4 h-4 mr-2"/>
-          Match
+            <HandshakeIcon className="w-4 h-4 mr-2"/>
+            Match
         </Button>
-        <Button
-          onClick={() => handleAction("deliver")}
-          variant="outline"
-          className="font-mono border-retro-brown/20 hover:bg-retro-brown/5"
-        >
-          <Package className="w-4 h-4 mr-2"/>
-          Deliver
-        </Button>
+        }
+        {listing.status === 2 && (listing.listingType == 0 ? listing.creator === address : listing.matchedWith === address) &&
+            <Button
+                onClick={() => handleAction("deliver")}
+                variant="outline"
+                className="font-mono bg-retro-sage hover:bg-retro-olive text-white"
+            >
+                <Package className="w-4 h-4 mr-2"/>
+                Deliver
+            </Button>
+        }
       </CardFooter>
     </Card>
   );
